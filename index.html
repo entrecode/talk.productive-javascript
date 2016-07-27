@@ -1,0 +1,1358 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Productive JavaScript</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background-color: #f7f7f7;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.slide-content {
+  height: 100% !important;
+}
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><h1 id="productive-javascript">Productive JavaScript</h1>
+<h2 id="es6-promises-code-quality">ES6 – Promises – Code Quality</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-2">
+    <section class="slide-content"><h3 id="agenda">Agenda</h3>
+<ul>
+<li>ES6/ES2015: notable features</li>
+<li>Promises, done right</li>
+<li>Style Guide &amp; Linting</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><h3 id="es6">ES6</h3>
+<ul>
+<li>current standard of JavaScript</li>
+<li>ECMAScript 2015</li>
+<li>Full support in Node.js 4/5</li>
+<li>Babel for Frontend Code</li>
+<li>Functional programming features</li>
+<li>Promises</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h3 id="var-const-let">var/const/let</h3>
+<ul>
+<li><code>var</code> is no more!</li>
+<li>default replacement is <code>const</code></li>
+</ul>
+<p>But what does that mean?</p>
+<ul>
+<li><code>const</code> is for constant: the pointer is immutable. <ul>
+<li>actual constant if primitive types are used</li>
+<li>objects and arrays may still change contents</li>
+</ul>
+</li>
+<li><code>let</code> is for changing or not yet defined types</li>
+<li>both are block-scoped. <code>var</code> is not!</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h3 id="block-scoping-examples">Block Scoping Examples</h3>
+<p>ES5:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+  <span class="hljs-keyword">var</span> v = <span class="hljs-string">'v'</span>;
+}
+<span class="hljs-built_in">console</span>.log(v);</code></pre>
+<p>ES6:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>) {
+  <span class="hljs-keyword">let</span> l = <span class="hljs-string">'l'</span>;
+}
+<span class="hljs-built_in">console</span>.log(l); <span class="hljs-comment">// reference error</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
+    <section class="slide-content"><h3 id="why-const-and-not-let-">Why <code>const</code> and not <code>let</code>?</h3>
+<ul>
+<li>variables cannot be overwritten by error<pre><code class="lang-js"><span class="hljs-keyword">const</span> myModule = <span class="hljs-built_in">require</span>(<span class="hljs-string">'module'</span>);
+myModule = <span class="hljs-string">'string'</span>; <span class="hljs-comment">// error</span></code></pre>
+</li>
+<li><code>let</code> basically only for flags or variables that are not defined at first:</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> connected = <span class="hljs-literal">false</span>;
+<span class="hljs-keyword">let</span> connection;
+
+makeConnection((conn) =&gt; {
+  connected = <span class="hljs-literal">true</span>;
+  connection = conn;
+});</code></pre>
+<ul>
+<li><strong>Suggested Workflow:</strong> convert all <code>var</code> to <code>const</code>, and check where it fails. Put <code>let</code> there.</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-7">
+    <section class="slide-content"><h3 id="arrow-functions">Arrow functions</h3>
+<p>Mainly syntactic sugar for anonymous functions:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">parameter</span>) </span>{
+  <span class="hljs-keyword">return</span> something;
+}
+<span class="hljs-comment">// becomes:</span>
+(parameter) =&gt; {
+  <span class="hljs-keyword">return</span> something
+}
+<span class="hljs-comment">// or</span>
+(parameter) =&gt; something
+<span class="hljs-comment">// or</span>
+parameter =&gt; something</code></pre>
+<ul>
+<li>if you only return something inside the function, <code>{ }</code> and <code>return</code> can be omitted</li>
+<li>if you have only one parameter and no <code>{ }</code>, the <code>( )</code> can be omitted, too</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-8">
+    <section class="slide-content"><h3 id="why-arrow-functions-">Why Arrow functions?</h3>
+<ul>
+<li>Arrow functions have no own <code>this</code> (great if you use <code>this</code>) – no <code>bind(this)</code> anymore</li>
+<li>more functional programming style</li>
+<li>cleaner callback functions</li>
+</ul>
+<pre><code class="lang-js">doSomethingAsync(result =&gt; callAnotherFunctionWith(result, andAnotherValue));</code></pre>
+<ul>
+<li>if you return a plain object, you can put in in <code>()</code></li>
+</ul>
+<pre><code class="lang-js">pairs = evens.map(v =&gt; ({ even: v, odd: v + <span class="hljs-number">1</span> }))</code></pre>
+<ul>
+<li>multiple parameters are also ok:</li>
+</ul>
+<pre><code class="lang-js">(x, y) =&gt; x + y</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h3 id="default-function-parameters">Default function parameters</h3>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params">x, y = 7, z = 42</span>) </span>{
+    <span class="hljs-keyword">return</span> x + y + z;
+}</code></pre>
+<ul>
+<li>do I need to say more?</li>
+<li>only in Node.js &gt;= 6.0</li>
+<li>Babel supports it for Browser use</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-10">
+    <section class="slide-content"><h3 id="rest-parameter">Rest Parameter</h3>
+<p>If the exact number of parameters is unknown, we can define an array containing them all:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params">x, ...a</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(x);
+  <span class="hljs-built_in">console</span>.log(a);
+}
+f(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</code></pre>
+<p>Logs:</p>
+<pre><code>1
+[2, 3, 4]</code></pre>
+<ul>
+<li>only in Node.js &gt;= 4.0 with <code>--harmony</code> flag</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-11">
+    <section class="slide-content"><h3 id="spread-operator">Spread Operator</h3>
+<ul>
+<li>the other way round:</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> array = [error, result];
+callbackFunction(...array); <span class="hljs-comment">// callbackFunction is called with (error, result)</span></code></pre>
+<ul>
+<li>only in Node.js &gt;= 4.0 with <code>--harmony</code> flag</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><h3 id="template-literals">Template Literals</h3>
+<pre><code class="lang-js"><span class="hljs-comment">// Old:</span>
+<span class="hljs-keyword">var</span> string = <span class="hljs-string">'text '</span> + aVariable + <span class="hljs-string">' more text\n'</span>
++ <span class="hljs-string">'in a new line'</span>;
+
+<span class="hljs-comment">// New:</span>
+<span class="hljs-keyword">const</span> string = <span class="hljs-string">`text <span class="hljs-subst">${aVariable}</span> more text
+in a new line`</span>;</code></pre>
+<ul>
+<li>oh yeah, multi-line strings are here!</li>
+<li>inside can be done anything: </li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-string">`the result is: <span class="hljs-subst">${val1 + val2 - func(val3)}</span>!`</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h3 id="enhanced-object-properties">Enhanced Object Properties</h3>
+<p>ES5:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">var</span> something = <span class="hljs-string">''</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params"></span>) </span>{ ... }
+
+<span class="hljs-keyword">var</span> obj = { 
+  something: something, 
+  f: f,
+  inlineFunction: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ ... }
+};
+obj[someOtherVar] = <span class="hljs-number">3</span>;</code></pre>
+<p>ES6:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> something = <span class="hljs-string">''</span>;
+<span class="hljs-keyword">const</span> f = () =&gt; {};
+
+<span class="hljs-keyword">const</span> obj = { 
+  something, 
+  f, 
+  inlineFunction() { ... }, 
+  [someOtherVar]: <span class="hljs-number">3</span> 
+};</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><h3 id="-filter-map-and-foreach">.filter, .map and .forEach</h3>
+<ul>
+<li>Not really ES6, but ES5.1... still important.</li>
+<li>no more (for) loops!</li>
+</ul>
+<pre><code class="lang-js">array
+.filter(key =&gt; !!key)
+.map(key =&gt; key + <span class="hljs-number">1</span>)
+.forEach(key =&gt; doSomething(key));</code></pre>
+<ul>
+<li>filter instead of if</li>
+<li>map if the array should be changed</li>
+<li>forEach if side effects should be triggered</li>
+<li>for Objects:</li>
+</ul>
+<pre><code class="lang-js"><span class="hljs-built_in">Object</span>.keys(object)
+.forEach(key =&gt; doSomething(object[key]));</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-15">
+    <section class="slide-content"><h3 id="other-cool-features">other cool features</h3>
+<ul>
+<li><code>import</code> and <code>export</code> will replace <code>require</code> (not in Node.js yet)</li>
+<li>new Data Types <code>Map</code>, <code>Set</code>, <code>WeakMap</code> and <code>WeakSet</code><ul>
+<li>Map: Key/Value, anything can be a key, replacement for Objects</li>
+<li>Set: Unique Values, replacement for Arrays (kind of)</li>
+</ul>
+</li>
+<li>finally an understandable Class notation (Java Style)</li>
+<li>Iterators, Generators</li>
+<li>Promises (in a minute!)</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h1 id="examples">Examples</h1>
+<h2 id="or-you-might-not-need-lodash">Or: You might not need lodash</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h3 id="arrays-1">Arrays 1</h3>
+<ul>
+<li><code>_.each(array, fn)</code>, <code>_.map(array, fn)</code>,  <code>_.reduce(array, fn)</code><ul>
+<li><code>array.forEach(fn)</code>, <code>array.map(fn)</code>, <code>array.reduce(fn)</code></li>
+</ul>
+</li>
+<li><code>_.every(array, fn)</code>, <code>_.some(array, fn)</code>,  <code>_.find(array, fn)</code><ul>
+<li><code>array.every(fn)</code>, <code>array.some(fn)</code>, <code>array.find(fn)</code></li>
+</ul>
+</li>
+<li><code>_.includes(array, element)</code><ul>
+<li><code>array.includes(element)</code> (Node.js ≥ 6.0)</li>
+</ul>
+</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h3 id="arrays-2">Arrays 2</h3>
+<ul>
+<li>Remove falsy values: (<code>_.compact</code>)<ul>
+<li><code>array.filter(x =&gt; !!x)</code></li>
+</ul>
+</li>
+<li>Remove duplicates: (<code>__uniq</code>)<ul>
+<li><code>[...new Set(array)]</code></li>
+</ul>
+</li>
+<li>Find Index with function: (<code>_.findIndex</code>)<ul>
+<li><code>array.findIndex(fn)</code>  </li>
+</ul>
+</li>
+</ul>
+<p>Note: these are all array functions. You may need to convert objects to arrays first using Object.keys(obj)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><h3 id="objects">Objects</h3>
+<ul>
+<li>Merge objects: (<code>_.assign</code>)<ul>
+<li><code>Object.assign({}, obj1, { some: thing })</code> OR</li>
+<li><code>{ ...obj1, { some: thing }}</code></li>
+</ul>
+</li>
+<li>Shallow Clone: <code>{ ...object }</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-20">
+    <section class="slide-content"><h1 id="promises">Promises</h1>
+<h2 id="the-key-to-escape-callback-hell">The key to escape callback hell</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"><h3 id="o-rly-">O RLY?</h3>
+<pre><code class="lang-js">datamanager.emailAvailable($scope.registerData.email).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">available</span>) </span>{
+    <span class="hljs-keyword">if</span> (available) {
+        datamanager.getAuthLink(<span class="hljs-string">'signup'</span>, {clientID: ecAuth.clientID}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url</span>) </span>{
+            $http.post(url, {
+                email: $scope.registerData.email,
+                password: $scope.registerData.password
+            }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">registerRes</span>) </span>{
+                EcAuthService.login(registerRes.data.token).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
+                    ecPublicUser.getUser().then(
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">account</span>) </span>{
+                            <span class="hljs-keyword">if</span> (account) { <span class="hljs-comment">//sometimes account is not defined</span>
+                                <span class="hljs-keyword">if</span> (account.accountID) {
+                                    <span class="hljs-comment">//do stuff with user</span>
+                                } <span class="hljs-keyword">else</span> {
+                                    datamanager.logout();
+                                    $location.path(<span class="hljs-string">'/login'</span>);
+                                }
+                            } <span class="hljs-keyword">else</span> {
+                                datamanager.logout();
+                                $location.path(<span class="hljs-string">'/login'</span>);
+                            }
+                    }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+                }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+            });
+        }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+    } <span class="hljs-keyword">else</span> {
+        $ionicPopup.alert({
+            title: <span class="hljs-string">'Fehler'</span>,
+            template: <span class="hljs-string">'Die von dir gewählte Email-Adresse ist bereits in Benutzung'</span>
+        });
+    }
+ }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-22">
+    <section class="slide-content"><h3 id="promises">Promises</h3>
+<ul>
+<li>Well known by Q, Bluebird etc – now a native Object: <code>Promise</code></li>
+<li>Makes a single error callback possible, for Callback Errors and &quot;thrown&quot; errors</li>
+<li>Easy chaining (<code>async.waterfall</code> in cool)</li>
+<li>No weird side effects (as Callbacks, which are based on side effects)</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-23">
+    <section class="slide-content"><h3 id="promise-rules">Promise Rules</h3>
+<ul>
+<li>There are three things that can be done inside a promise handler:<ul>
+<li><code>return</code> another Promise</li>
+<li><code>return undefined</code> or a synchronous value</li>
+<li><code>throw</code> an error</li>
+</ul>
+</li>
+<li>Add 1 <code>catch</code>, at the end of the outermost Promise Chain</li>
+<li>Don&#39;t use the second parameter of <code>then</code> for error handling</li>
+<li>Always return!</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-24">
+    <section class="slide-content"><h3 id="example-1-promise-hell">Example 1: Promise Hell</h3>
+<p>Happens if you just use Promises like callbacks:</p>
+<pre><code class="lang-js">doSomethingAsync(withParameter).then((<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
+  doSomethingElse(result).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">innerResult</span>) </span>{
+    doThatNow(innerResult).then((finalResult) {
+      callback(<span class="hljs-literal">null</span>, finalResult);
+    }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        callback(error);
+    }); 
+  }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+    callback(error);
+  })
+}).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+  callback(error);
+});</code></pre>
+<p>(bad!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
+    <section class="slide-content"><h3 id="example-1-promise-hell">Example 1: Promise Hell</h3>
+<p>Ok, lets put in some structure:</p>
+<pre><code class="lang-js">doSomethingAsync(withParameter)
+.then((result) =&gt; {
+  doSomethingElse(result)
+})
+.then((innerResult) =&gt; {
+  doThatNow(innerResult);
+})
+.then(finalResult =&gt; callback(<span class="hljs-literal">null</span>, finalResult))
+.catch(callback)</code></pre>
+<p>(still bad! Why?)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-26">
+    <section class="slide-content"><h3 id="example-1-promise-hell">Example 1: Promise Hell</h3>
+<p>The Promises are not returned!
+Best solution:</p>
+<pre><code class="lang-js">doSomethingAsync(withParameter)
+.then(doSomethingElse)
+.then(doThatNow)
+.then(finalResult =&gt; callback(<span class="hljs-literal">null</span>, finalResult))
+.catch(callback)</code></pre>
+<p>(good!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-27">
+    <section class="slide-content"><h3 id="example-2-foreach">Example 2: forEach</h3>
+<pre><code class="lang-js">getList(ofThings)
+.then((result) =&gt; {
+  <span class="hljs-keyword">return</span> result.rows.forEach((row) =&gt; {
+    <span class="hljs-keyword">return</span> db.remove(row.doc);  
+  });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// All deleted! Or not...?</span>
+})
+.catch(errorHandler);</code></pre>
+<p>(bad!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-28">
+    <section class="slide-content"><h3 id="example-2-foreach">Example 2: forEach</h3>
+<p><code>forEach</code> returns <code>undefined</code>. The second <code>then</code> is called immediately. Errors are not handled.
+Better:</p>
+<pre><code class="lang-js">getList(ofThings)
+.then((result) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(result.rows.map((row) =&gt; {
+    <span class="hljs-keyword">return</span> db.remove(row.doc);  
+  });
+})
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">weHaveTheResultsHere</span>) </span>{
+  <span class="hljs-comment">// All deleted!</span>
+})
+.catch(errorHandler);</code></pre>
+<p>(good! But can be shortened)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-29">
+    <section class="slide-content"><h3 id="example-2-foreach">Example 2: forEach</h3>
+<p><code>forEach</code> returns <code>undefined</code>. The second <code>then</code> is called immediately. Errors are not handled.
+Better:</p>
+<pre><code class="lang-js">getList(ofThings)
+.then(result =&gt; <span class="hljs-built_in">Promise</span>.all(
+  result.rows.map(row =&gt; db.remove(row.doc))
+))
+.then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">weHaveTheResultsHere</span>) </span>{
+  <span class="hljs-comment">// All deleted!</span>
+})
+.catch(errorHandler);</code></pre>
+<p>(good!)</p>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-30">
+    <section class="slide-content"><h3 id="example-3-oh-no-we-have-no-promises-">Example 3: Oh no, we have no Promises!</h3>
+<p>In the old days, Promises were created like that:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrapACallbackFunction</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">var</span> deferred = q.defer();
+
+  callingACallbackFunction(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, value</span>) </span>{
+    <span class="hljs-keyword">if</span> (error) {
+      deferred.reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'ohoh'</span>));
+    } <span class="hljs-keyword">else</span> {
+      deferred.resolve(<span class="hljs-string">'Greeting '</span> + name + <span class="hljs-string">' is not allowed.'</span>);
+    }
+  });
+  <span class="hljs-keyword">return</span> deferred.promise;
+}</code></pre>
+<p>(bad!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-31">
+    <section class="slide-content"><h3 id="example-3b-oh-no-we-have-other-promises-">Example 3b: Oh no, we have other Promises!</h3>
+<p>Still often used:</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shouldReturnAPromise</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">var</span> deferred = q.defer();
+
+  doSomethingThatAlsoReturnsAPromise(name).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result</span>) </span>{
+    result.addProperty = <span class="hljs-string">'my very own property'</span>;
+    deferred.resolve(result);
+  }
+  <span class="hljs-keyword">return</span> deferred.promise;
+}</code></pre>
+<p>(bad!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-32">
+    <section class="slide-content"><h3 id="example-3-">Example 3:</h3>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wrapACallbackFunction</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+    callingACallbackFunction((error, value) =&gt; {
+      <span class="hljs-keyword">if</span> (error) {
+        <span class="hljs-keyword">return</span> reject(error);
+      }
+      <span class="hljs-keyword">return</span> resolve(value);
+    })
+  });
+}
+
+<span class="hljs-comment">// example 3b:</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shouldReturnAPromise</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">return</span> doSomethingThatAlsoReturnsAPromise(name)
+  .then((result) =&gt; {
+    result.addProperty = <span class="hljs-string">'my very own property'</span>;
+    <span class="hljs-keyword">return</span> result;
+  })
+}</code></pre>
+<p>(good!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-33">
+    <section class="slide-content"><h3 id="example-4-sync-start-of-a-promise-chain">Example 4: Sync Start of a Promise Chain</h3>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doSomethingWithJSONString</span>(<span class="hljs-params">string</span>) </span>{
+  <span class="hljs-keyword">const</span> json = <span class="hljs-built_in">JSON</span>.parse(string);
+  json.myOwnProp = anotherObject.key;
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+    resolve(json)
+  })
+  .then(callSomething)
+  .catch(handleError);
+}</code></pre>
+<p>(bad! Why?)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-34">
+    <section class="slide-content"><h3 id="example-4-sync-start-of-a-promise-chain">Example 4: Sync Start of a Promise Chain</h3>
+<p>What if the string is no JSON? JSON.parse will throw.
+What if <code>anotherObject</code> has no Property <code>key</code>? It will throw.</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doSomethingWithJSONString</span>(<span class="hljs-params">string</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(string)
+  .then(<span class="hljs-built_in">JSON</span>.parse)
+  .then((json) =&gt; {
+    json.myOwnProp = anotherObject.key;
+    <span class="hljs-keyword">return</span> json;
+  })
+  .then(callSomething)
+  .catch(handleError);
+}</code></pre>
+<p>(good!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-35">
+    <section class="slide-content"><h3 id="example-4-sync-start-of-a-promise-chain">Example 4: Sync Start of a Promise Chain</h3>
+<ul>
+<li>all Errors are catched</li>
+<li>If you write a function that returns a Promise, it is almost always a good idea to start with <code>Promise.resolve</code>;</li>
+<li>There is also <code>Promise.reject(error)</code>, but its the same as <code>throw error</code> inside a Promise chain.</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-36">
+    <section class="slide-content"><h3 id="example-5-then-success-error-">Example 5: <code>then(success, error)</code></h3>
+<pre><code>somePromise()
+.then(() =&gt; someOtherPromise())
+.catch((error) =&gt; {
+  // handle error
+});
+
+somePromise()
+.then(
+  () =&gt; someOtherPromise(), 
+  (error) =&gt; {
+    // handle error
+  }
+);</code></pre>
+<p>Is that the same?</p>
+<ul>
+<li>No!</li>
+<li>Always use <code>catch</code>, never the second argument to <code>then</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-37">
+    <section class="slide-content"><h3 id="example-6-promise-all-in-sequence-">Example 6: Promise.all in sequence?</h3>
+<p>If we want to execute multiple Promises in Parallel, we have Promise.all(promiseArray).
+What if we want them executed in sequence?</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">executeSequentially</span>(<span class="hljs-params">promises</span>) </span>{
+  <span class="hljs-keyword">var</span> result = <span class="hljs-built_in">Promise</span>.resolve();
+  promises.forEach((promise) =&gt; {
+    result = result.then(promise);
+  });
+  <span class="hljs-keyword">return</span> result;
+}
+
+<span class="hljs-keyword">const</span> files = [<span class="hljs-string">'file1'</span>, <span class="hljs-string">'file2'</span>, <span class="hljs-string">'file3'</span>];
+<span class="hljs-keyword">return</span> executeSequentially(files.map(deleteFile))
+.catch(errorHandler);</code></pre>
+<p>(bad! why?)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-38">
+    <section class="slide-content"><h3 id="example-6-promise-all-in-sequence-">Example 6: Promise.all in sequence?</h3>
+<p>It is still parallel, because the Promises execute immediately when they are created.
+Also, executeSequentially returns instantly without waiting for anything.</p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">executeSequentially</span>(<span class="hljs-params">promises</span>) </span>{
+  <span class="hljs-keyword">var</span> result = <span class="hljs-built_in">Promise</span>.resolve();
+  promises.forEach((promise) =&gt; {
+    result = result.then(promise);
+  });
+  <span class="hljs-keyword">return</span> result;
+}
+
+<span class="hljs-keyword">const</span> files = [<span class="hljs-string">'file1'</span>, <span class="hljs-string">'file2'</span>, <span class="hljs-string">'file3'</span>];
+<span class="hljs-keyword">return</span> executeSequentially(files.map(file =&gt; () =&gt; deleteFile(file))
+.catch(errorHandler);</code></pre>
+<p>(good!)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-39">
+    <section class="slide-content"><h3 id="example-6-promise-all-in-sequence-">Example 6: Promise.all in sequence?</h3>
+<p>The <code>executeSequentially</code> can be further tuned using <code>reduce</code></p>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">executeSequentially</span>(<span class="hljs-params">promises</span>) </span>{
+  <span class="hljs-keyword">return</span> promises.reduce((result, promise) =&gt; result.then(promise), <span class="hljs-built_in">Promise</span>.resolve());
+}
+
+<span class="hljs-keyword">const</span> files = [<span class="hljs-string">'file1'</span>, <span class="hljs-string">'file2'</span>, <span class="hljs-string">'file3'</span>];
+<span class="hljs-keyword">return</span> executeSequentially(files.map(file =&gt; () =&gt; deleteFile(file))
+.catch(errorHandler);
+
+<span class="hljs-comment">// OR:</span>
+
+<span class="hljs-keyword">return</span> files
+.map(file =&gt; () =&gt; deleteFile(file))
+.reduce((r, p) =&gt; r.then(p), <span class="hljs-built_in">Promise</span>.resolve())
+.catch(errorHandler);</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-40">
+    <section class="slide-content"><h3 id="example-7-results-of-2-promises">Example 7: Results of 2 Promises</h3>
+<pre><code class="lang-js">getUserByName(<span class="hljs-string">'nolan'</span>)
+.then(user =&gt; getUserAccountById(user.id))
+.then((userAccount) =&gt; {
+  <span class="hljs-keyword">return</span> { user, userAccount };
+})
+.catch(errorHandler);</code></pre>
+<p>Throws an error.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-41">
+    <section class="slide-content"><h3 id="example-7-results-of-2-promises">Example 7: Results of 2 Promises</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> user;
+getUserByName(<span class="hljs-string">'nolan'</span>)
+.then((result) =&gt; {
+  user = result;
+  <span class="hljs-keyword">return</span> getUserAccountById(user.id)
+})
+.then((userAccount) =&gt; {
+  <span class="hljs-keyword">return</span> { user, userAccount };
+})
+.catch(errorHandler);</code></pre>
+<p>Solution 1 (★★★☆☆)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-42">
+    <section class="slide-content"><h3 id="example-7-results-of-2-promises">Example 7: Results of 2 Promises</h3>
+<pre><code class="lang-js">getUserByName(<span class="hljs-string">'nolan'</span>)
+.then((result) =&gt; {
+  <span class="hljs-keyword">return</span> getUserAccountById(user.id)
+  .then((userAccount) =&gt; {
+    <span class="hljs-keyword">return</span> { user, userAccount };
+  })
+})
+.catch(errorHandler);</code></pre>
+<p>Solution 2 (★★★★☆)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-43">
+    <section class="slide-content"><h3 id="example-7-results-of-2-promises">Example 7: Results of 2 Promises</h3>
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addAccountToUserObject</span>(<span class="hljs-params">user</span>) </span>{
+  <span class="hljs-keyword">return</span> getUserAccountById(user.id)
+  .then((userAccount) =&gt; {
+    <span class="hljs-keyword">return</span> { user, userAccount };
+  })
+}
+
+getUserByName(<span class="hljs-string">'nolan'</span>)
+.then(addAccountToUserObject)
+.catch(errorHandler);</code></pre>
+<p>Solution 3 (★★★★★)</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-44">
+    <section class="slide-content"><h3 id="so-what-about-that-now-">So what about that now?</h3>
+<pre><code class="lang-js">datamanager.emailAvailable($scope.registerData.email).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">available</span>) </span>{
+    <span class="hljs-keyword">if</span> (available) {
+        datamanager.getAuthLink(<span class="hljs-string">'signup'</span>, {clientID: ecAuth.clientID}).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">url</span>) </span>{
+            $http.post(url, {
+                email: $scope.registerData.email,
+                password: $scope.registerData.password
+            }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">registerRes</span>) </span>{
+                EcAuthService.login(registerRes.data.token).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user</span>) </span>{
+                    ecPublicUser.getUser().then(
+                        <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">account</span>) </span>{
+                            <span class="hljs-keyword">if</span> (account) { <span class="hljs-comment">//sometimes account is not defined</span>
+                                <span class="hljs-keyword">if</span> (account.accountID) {
+                                    <span class="hljs-comment">//do stuff with user</span>
+                                } <span class="hljs-keyword">else</span> {
+                                    datamanager.logout();
+                                    $location.path(<span class="hljs-string">'/login'</span>);
+                                }
+                            } <span class="hljs-keyword">else</span> {
+                                datamanager.logout();
+                                $location.path(<span class="hljs-string">'/login'</span>);
+                            }
+                    }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+                }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+            });
+        }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));
+    } <span class="hljs-keyword">else</span> {
+        $ionicPopup.alert({
+            title: <span class="hljs-string">'Fehler'</span>,
+            template: <span class="hljs-string">'Die von dir gewählte Email-Adresse ist bereits in Benutzung'</span>
+        });
+    }
+ }).catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));</code></pre>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-45">
+    <section class="slide-content"><h3 id="becomes-to-this-">Becomes to this:</h3>
+<pre><code class="lang-js">datamanager.emailAvailable($scope.registerData.email)
+.then((available) =&gt; {
+  <span class="hljs-keyword">if</span> (!available) {
+    <span class="hljs-keyword">return</span> $ionicPopup.alert({
+      title: <span class="hljs-string">'Fehler'</span>,
+      template: <span class="hljs-string">'Die von dir gewählte Email-Adresse ist bereits in Benutzung'</span>
+    });
+  }
+  <span class="hljs-keyword">return</span> datamanager.getAuthLink(<span class="hljs-string">'signup'</span>, {clientID: ecAuth.clientID})
+  .then(url =&gt; $http.post(url, {
+    email: $scope.registerData.email,
+    password: $scope.registerData.password
+  })
+  .then(registerRes =&gt; EcAuthService.login(registerRes.data.token))
+  .then(user =&gt; ecPublicUser.getUser())
+  .then((account) =&gt; {
+    <span class="hljs-keyword">if</span> (account &amp;&amp; account.accountID) {
+      <span class="hljs-comment">//do stuff with user</span>
+    } <span class="hljs-keyword">else</span> {
+      datamanager.logout();
+      $location.path(<span class="hljs-string">'/login'</span>);
+    }
+  })
+})
+.catch(<span class="hljs-built_in">console</span>.error.bind(<span class="hljs-built_in">console</span>));</code></pre>
+<ul>
+<li>one catch</li>
+<li>always return</li>
+<li>early returns instead of else cases</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-46">
+    <section class="slide-content"><h1 id="code-quality">Code Quality</h1>
+<h2 id="style-guide-and-linting">Style Guide and Linting</h2>
+<p><strong>Good News:</strong> IntelliJ/WebStorm knows all about ES6 and helps us using it correctly!
+(Preferences, Languages &amp; Frameworks, JavaScript, Language Version)</p>
+<p>What we need to configure, is a good Style Guide and automatic Linting.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-47">
+    <section class="slide-content"><h3 id="the-airbnb-javascript-style-guide">The Airbnb JavaScript Style Guide</h3>
+<p><a href="https://github.com/airbnb/javascript/"><a href="https://github.com/airbnb/javascript/">https://github.com/airbnb/javascript/</a></a></p>
+<blockquote>
+<p>A mostly reasonable approach to JavaScript</p>
+</blockquote>
+<ul>
+<li>can be configured in IntelliJ/Webstorm</li>
+<li>we cover the most important points now</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-48">
+    <section class="slide-content"><h3 id="airbnb-javascript-style-guide-basics">Airbnb JavaScript Style Guide Basics</h3>
+<ul>
+<li>Use <code>const</code>, avoid <code>var</code>. </li>
+<li>Use single Quotes for Strings</li>
+<li>Use Template Strings if building strings programmatically</li>
+<li>Use Arrow Function Notation for function expressions</li>
+<li>Avoid using Iterators and Generators</li>
+<li>Use <code>===</code> and <code>!==</code> over <code>==</code> and <code>!=</code></li>
+<li>2 Spaces indentation</li>
+<li>Additional trailing commas in Objects and Arrays</li>
+<li>Use Semicolons</li>
+<li>Don&#39;t save references to <code>this</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-49">
+    <section class="slide-content"><h3 id="eslint">ESLint</h3>
+<p>Simple linting, you only need one configuration file in your root projects folder.</p>
+<p>More Doc and how to configure IntelliJ / Webstorm: <a href="./styleguide/eslint-airbnb-intellij.md">Airbnb Style Guide in IntelliJ IDEA / WebStorm</a></p>
+</section>
+  </div>
+  <div class="slide hidden  " id="slide-50">
+    <section class="slide-content"><h3 id="resources-on-es6">Resources on ES6</h3>
+<ul>
+<li>Short Introduction to ES6: <a href="http://es6-features.org/">http://es6-features.org/</a></li>
+<li>ES6 Support in Node.js: <a href="http://node.green/">http://node.green/</a></li>
+<li>ES6 in Frontend/Browser Applications: <a href="https://babeljs.io/">https://babeljs.io/</a></li>
+<li>You Might Not Need Underscore: <a href="https://www.reindex.io/blog/you-might-not-need-underscore/">https://www.reindex.io/blog/you-might-not-need-underscore/</a></li>
+<li>Functional Programming in JS: <a href="http://cryto.net/~joepie91/blog/2015/05/04/functional-programming-in-javascript-map-filter-reduce/">http://cryto.net/~joepie91/blog/2015/05/04/functional-programming-in-javascript-map-filter-reduce/</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-51">
+    <section class="slide-content"><h3 id="resources-on-style-guide">Resources on Style Guide</h3>
+<ul>
+<li>Airbnb JavaScript Style Guide: <a href="https://github.com/airbnb/javascript/">https://github.com/airbnb/javascript/</a></li>
+<li>Configuration of Style Guide and ESLint: <a href="./styleguide/eslint-airbnb-intellij.md">Airbnb Style Guide in IntelliJ IDEA / WebStorm</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-52">
+    <section class="slide-content"><h3 id="other-resources">Other Resources</h3>
+<ul>
+<li><a href="https://medium.com/@jdaudier/how-to-create-and-publish-your-first-node-js-module-444e7585b738#.umna0okwi">Creating NPM Modules</a> </li>
+<li>Using NPM instead of Bower: <a href="https://gofore.com/stop-using-bower/">https://gofore.com/stop-using-bower/</a></li>
+<li>Git Flow: <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow</a></li>
+<li>Understanding JSON Schema: <a href="https://spacetelescope.github.io/understanding-json-schema/reference/index.html">https://spacetelescope.github.io/understanding-json-schema/reference/index.html</a></li>
+<li>DevDocs: <a href="http://devdocs.io/">http://devdocs.io/</a></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden author-slide" id="slide-53">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">Ruben Deyhle, entrecode GmbH</h1>
+    <h3 class="twitter">
+      <a href="http://twitter.com/@iRuben">@iRuben</a>
+    </h3>
+    <h3 class="url">
+      <a href="https://entrecode.de">https://entrecode.de</a>
+    </h3>
+    <h3 class="email">
+      <a href="mailto:deyhle@entrecode.de">deyhle@entrecode.de</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({} , null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
