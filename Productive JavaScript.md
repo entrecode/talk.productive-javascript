@@ -872,7 +872,7 @@ What we need to configure, is a good Style Guide and automatic Linting.
 
 Simple linting, you only need one configuration file in your root projects folder.
 
-More Doc and how to configure IntelliJ / Webstorm: [Airbnb Style Guide in IntelliJ IDEA / WebStorm](https://github.com/deyhle/talk.productive-javascript/blob/master/styleguide/eslint-airbnb-intellij.md)
+More Doc and how to configure IntelliJ / Webstorm: [Airbnb Style Guide in IntelliJ IDEA / WebStorm](https://github.com/deyhle/talk.productive-javascript/blob/gh-pages/styleguide/eslint-airbnb-intellij.md)
 
 -- 
 
@@ -889,7 +889,7 @@ More Doc and how to configure IntelliJ / Webstorm: [Airbnb Style Guide in Intell
 ### Resources on Style Guide
 
 - Airbnb JavaScript Style Guide: https://github.com/airbnb/javascript/
-- Configuration of Style Guide and ESLint: [Airbnb Style Guide in IntelliJ IDEA / WebStorm](https://github.com/deyhle/talk.productive-javascript/blob/master/styleguide/eslint-airbnb-intellij.md)
+- Configuration of Style Guide and ESLint: [Airbnb Style Guide in IntelliJ IDEA / WebStorm](https://github.com/deyhle/talk.productive-javascript/blob/gh-pages/styleguide/eslint-airbnb-intellij.md)
 
 
 --
