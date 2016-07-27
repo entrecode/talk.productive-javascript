@@ -6,7 +6,7 @@ The slides are html built with [cleaver](https://github.com/jdan/cleaver).
 
 ## Watch:
 
-[./index.html](./index.html)
+[https://deyhle.github.io/talk.productive-javascript/](https://deyhle.github.io/talk.productive-javascript/)
 
 ## Build:
 
