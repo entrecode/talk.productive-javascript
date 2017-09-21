@@ -31,13 +31,15 @@ npm i -g \
 
 2. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the [eslint file](./files/x.eslintrc), put it into your projects folder and rename it to `.eslintrc` (without the x).
 3. Open IntelliJ IDEA / WebStorm and open the global settings (all projects closed!)
-4. Copy the [codestyle.xml](./files/codestyle.xml) file to `~/Library/Preferences/<IDE NAME>/codestyles/codestyle.xml`
-5. Select Editor -> Code Style and click on 'Manage'. Make sure "airbnb" is selected.
-6. Select Editor -> Inspections and click on 'Manage'. Import the [Inspections.xml](./files/Inspections.xml) file. Make sure "airbnb" is selected.
-7. Select Languages & Frameworks -> JavaScript -> Code Quality Tools and make sure that <s>only ESLint</s> nothing is enabled. Install the custom ESLint Plugin found in the Plugin Manager which is https://github.com/idok/eslint-plugin – it supports the `--fix` option. Point to the globally installed ESLint package at `~/.node/lib/node_modules/eslint`
-8. Maybe set a custom keymap (e.g. alt+cmd+K) to "ESLint Fix"
-9. Make sure options 4.-6. are also configured correctly for your projects (project settings may overwrite global settings).
-10. Make sure you have no conflicting linting or formatting configuration inside your project (extra .eslintrc files, .editorconfig files, jshint configuration in package.json, ...)
+4. Select Plugins -> Install JetBrains plugin… and search for "Twig Support". Install this plugin.
+5. Copy the [codestyle.xml](./files/codestyle.xml) file to `~/Library/Preferences/<IDE NAME>/codestyles/codestyle.xml`
+6. Select Editor -> Code Style and click on 'Manage'. Make sure "airbnb" is selected.
+7. Select Editor -> Inspections and click on 'Manage'. Import the [Inspections.xml](./files/Inspections.xml) file. Make sure "airbnb" is selected.
+8. Select Editor -> File Types -> Twig -> Registered Patterns and add the file pattern `*.njk`.
+9. Select Languages & Frameworks -> JavaScript -> Code Quality Tools and make sure that <s>only ESLint</s> nothing is enabled. Install the custom ESLint Plugin found in the Plugin Manager which is https://github.com/idok/eslint-plugin – it supports the `--fix` option. Point to the globally installed ESLint package at `~/.node/lib/node_modules/eslint`
+10. Maybe set a custom keymap (e.g. alt+cmd+K) to "ESLint Fix"
+11. Make sure options 4.-6. are also configured correctly for your projects (project settings may overwrite global settings).
+12. Make sure you have no conflicting linting or formatting configuration inside your project (extra .eslintrc files, .editorconfig files, jshint configuration in package.json, ...)
 
 ## Usage
 
