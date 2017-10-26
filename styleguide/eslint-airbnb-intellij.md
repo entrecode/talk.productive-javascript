@@ -14,19 +14,12 @@ Three components are needed for development: the .eslintrc file, the inspections
 
 ```sh
 npm install -g \
-  eslint-config-airbnb \
+  babel-eslint \
   eslint \
-  babel-eslint \
-  eslint-plugin-react
-
-# as of eslint-config-airbnb@15.0.2 you will need the following command:
-npm i -g \
-  eslint@3 \
-  eslint-config-airbnb \
-  babel-eslint \
-  eslint-plugin-react \
+  eslint-config-airbnb \
   eslint-plugin-import \
-  eslint-plugin-jsx-a11y@5
+  eslint-plugin-jsx-a11y \
+  eslint-plugin-react
 ```
 
 2. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the [eslint file](./files/x.eslintrc), put it into your projects folder and rename it to `.eslintrc` (without the x).
