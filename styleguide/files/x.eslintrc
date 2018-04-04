@@ -36,7 +36,10 @@
         "allow": [
           "_embedded",
           "_links",
-          "_traversal"
+          "_traversal",
+          "_id",
+          "_created",
+          "_modified"
         ]
       }
     ]
@@ -49,5 +52,14 @@
     "node": true,
     "mocha": true
   },
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "globals": {
+    "window": false,
+    "document": false,
+    "localStorage": false,
+    "navigator": false,
+    "confirm": false,
+    "alert": false,
+    "FormData": false
+  }
 }
