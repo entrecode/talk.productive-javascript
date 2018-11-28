@@ -10,6 +10,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
     ```sh
     npm i -g \
       eslint \
+      babel-eslint \
       eslint-config-airbnb \
       eslint-plugin-import \
       eslint-plugin-jsx-a11y \
