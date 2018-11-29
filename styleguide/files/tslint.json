@@ -1,0 +1,23 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "/Users/deyhle/.nvm/versions/node/default/lib/node_modules/tslint-config-airbnb",
+    "/Users/deyhle/.nvm/versions/node/default/lib/node_modules/ts"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-boolean-literal-compare": false,
+    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": false }],
+    "curly": [2, "all"],
+    "valid-jsdoc": 2,
+    "strict": [1, "global"],
+    "handle-callback-err": 2,
+    "no-underscore-dangle": [
+      2,
+      {
+        "allow": ["_embedded", "_links", "_traversal", "_id", "_created", "_modified"]
+      }
+    ]
+  },
+  "rulesDirectory": []
+}

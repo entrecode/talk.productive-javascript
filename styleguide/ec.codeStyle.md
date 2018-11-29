@@ -17,12 +17,16 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       eslint-plugin-react \
       eslint-plugin-prettier \
       eslint-config-prettier \
+      tslint \
+      tslint-config-airbnb \
+      tslint-config-prettier\
       prettier@~1.15.2 # note the pinned version
     ```
 4. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the `files/x.eslintrc` file, put it into your projects folder and rename it to .eslintrc (without the x). 
 5. Repeat step 3 with the .prettierrc file `files/x.prettierrc`.
-6. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), and [Twig Language 2](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language-2). The latter is for Nunjucks files.
-7. Open User Settings (cmd + , then navigate "…" + Open settings.json) and add the following settings to your existing settings.
+6. Repeat step 3 with the tslint config file `files/tslint.json`. No need to rename here.
+7. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), and [Twig Language 2](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language-2). The latter is for Nunjucks files.
+8. Open User Settings (cmd + , then navigate "…" + Open settings.json) and add the following settings to your existing settings.
     
     ```json
     {
@@ -31,7 +35,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "eslint.provideLintTask": true,
       "eslint.run": "onType",
       "emmet.includeLanguages": {
-        "njk": "html"
+        "twig": "html"
       },
       "files.associations": {
         "*.njk": "twig"
