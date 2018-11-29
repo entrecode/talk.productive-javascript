@@ -20,13 +20,10 @@
       }
     ]
   },
-  "globals": {
-    "window": false,
-    "document": false,
-    "localStorage": false,
-    "navigator": false,
-    "confirm": false,
-    "alert": false,
-    "FormData": false
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+    "browser": true,
   }
 }
