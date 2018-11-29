@@ -21,7 +21,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
     ```
 4. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the `files/x.eslintrc` file, put it into your projects folder and rename it to .eslintrc (without the x). 
 5. Repeat step 3 with the .prettierrc file `files/x.prettierrc`.
-6. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+6. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), and [Twig Language 2](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language-2). The latter is for Nunjucks files.
 7. Open User Settings (cmd + , then navigate "…" + Open settings.json) and add the following settings to your existing settings.
     
     ```json
@@ -30,6 +30,13 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "eslint.enable": true,
       "eslint.provideLintTask": true,
       "eslint.run": "onType",
+      "emmet.includeLanguages": {
+        "njk": "html"
+      },
+      "files.associations": {
+        "*.njk": "twig"
+      },
+      "twig-language-2.tabSize": 2
     }
     ```
 
