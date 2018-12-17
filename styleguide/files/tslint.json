@@ -1,8 +1,8 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "/Users/deyhle/.nvm/versions/node/default/lib/node_modules/tslint-config-airbnb",
-    "/Users/deyhle/.nvm/versions/node/default/lib/node_modules/ts"
+    "/Users/<USER>/.nvm/versions/node/default/lib/node_modules/tslint-config-airbnb",
+    "/Users/<USER>/.nvm/versions/node/default/lib/node_modules/ts"
   ],
   "jsRules": {},
   "rules": {
