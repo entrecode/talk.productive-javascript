@@ -25,7 +25,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
 4. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the `files/x.eslintrc` file, put it into your projects folder and rename it to .eslintrc (without the x). 
 5. Repeat step 4 with the .prettierrc file `files/x.prettierrc`.
 6. Repeat step 4 with the tslint config file `files/tslint.json`. No need to rename here.
-7. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), and [Nunjucks Template Converter](https://marketplace.visualstudio.com/items?itemName=okitavera.vscode-nunjucks-formatter). The latter is for Nunjucks files.
+7. Open Visual Studio Code and install [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), [TSLint](https://marketplace.visualstudio.com/items?itemName=eg2.tslint), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), [Nunjucks](https://marketplace.visualstudio.com/items?itemName=ronnidc.nunjucks), and [Nunjucks Template Converter](https://marketplace.visualstudio.com/items?itemName=okitavera.vscode-nunjucks-formatter). The latter is for Nunjucks files.
 8. Open User Settings (cmd + , then navigate "…" + Open settings.json) and add the following settings to your existing settings.
     
     ```json
@@ -33,14 +33,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "editor.formatOnSave": false,
       "eslint.enable": true,
       "eslint.provideLintTask": true,
-      "eslint.run": "onType",
-      "emmet.includeLanguages": {
-        "twig": "html"
-      },
-      "files.associations": {
-        "*.njk": "twig"
-      },
-      "twig-language-2.tabSize": 2
+      "eslint.run": "onType"
     }
     ```
 
