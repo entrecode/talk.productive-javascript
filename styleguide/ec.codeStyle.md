@@ -33,7 +33,7 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "editor.formatOnSave": false,
       "eslint.enable": true,
       "eslint.provideLintTask": true,
-      "eslint.run": "onType".
+      "eslint.run": "onType",
       "editor.detectIndentation": false,
       "editor.tabSize": 2,
     }
