@@ -36,6 +36,9 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "eslint.run": "onType",
       "editor.detectIndentation": false,
       "editor.tabSize": 2,
+      "emmet.includeLanguages": {
+        "nunjucks": "html"
+      }
     }
     ```
 
