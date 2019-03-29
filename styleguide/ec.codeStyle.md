@@ -38,6 +38,10 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
       "editor.tabSize": 2,
       "emmet.includeLanguages": {
         "nunjucks": "html"
+      },
+      "files.associations": {
+        "*.html": "html",
+        "*.njk": "nunjucks"
       }
     }
     ```
