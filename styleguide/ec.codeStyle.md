@@ -9,17 +9,19 @@ We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/)
 
     ```sh
     npm i -g \
-      eslint \
       babel-eslint \
+      eslint \
       eslint-config-airbnb \
+      eslint-config-prettier \
       eslint-plugin-import \
       eslint-plugin-jsx-a11y \
       eslint-plugin-react \
+      eslint-plugin-react-hooks@^1.7.0 \
       eslint-plugin-prettier \
-      eslint-config-prettier \
       tslint \
       tslint-config-airbnb \
       tslint-config-prettier \
+      typescript \
       prettier@~1.15.2 # note the pinned version
     ```
 4. ESLint looks for .eslintrc configuration files up to the root folder. This means that you don't need a file in each project repository, but just in your root projects folder (e.g. your entrecode folder). Download the `files/x.eslintrc` file, put it into your projects folder and rename it to .eslintrc (without the x). 
