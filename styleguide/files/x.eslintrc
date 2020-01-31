@@ -1,5 +1,5 @@
 {
-	"extends": ["airbnb", "plugin:prettier/recommended"],
+	"extends": ["airbnb", "prettier/recommended"],
 	"rules": {
 		"prettier/prettier": 2,
 		"quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": false }],
@@ -18,8 +18,19 @@
 			{
 				"allow": ["_embedded", "_links", "_traversal", "_id", "_created", "_modified"]
 			}
+		],
+		"comma-dangle": [
+			"error",
+			{
+				"arrays": "always-multiline",
+				"exports": "always-multiline",
+				"functions": "never",
+				"imports": "always-multiline",
+				"objects": "always-multiline"
+			}
 		]
 	},
+	"plugins": ["prettier"],
 	"env": {
 		"es6": true,
 		"node": true,
