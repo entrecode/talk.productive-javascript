@@ -3,7 +3,18 @@
 
 We are using [prettier](https://prettier.io/) with [eslint](https://eslint.org/). It's that simple.
 
-1. Get your [node](https://confluence.entrecode.de/display/KB/Node.js+setup) environment up and running.
+1. Get your [node](https://confluence.entrecode.de/display/KB/Node.js+setup) environment up and running.    
+    a) Make sure NVM is installed, current version can be found at https://github.com/creationix/nvm#install-script
+
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+    b) Install/Update desired versions
+
+        nvm install 10
+        nvm install 12
+        nvm alias default 12
+        cd ~/.nvm/versions/node
+        ln -s v12.x.x default # to make a symlink into default, if you follow 3. your IDE settings will be valid with the new version
+
 2. Install [Visual Studio Code](https://confluence.entrecode.de/display/KB/VSCode+Setup).
 3. Install dependencies – run the following on a non-sudo command line:
 
